@@ -1105,13 +1105,19 @@ A checked exception to throw when an invalid action is attempted (See Section 5.
 </table>
 
 ## 7. Other Information
-### 7.1 Sample Implementation
-[A possible sample implementation](http://cs251122t2projectsample-env.eba-42umxris.us-east-2.elasticbeanstalk.com/app/) has been released.
+### 7.1 Running the frontend
+For running the frontend locally, you will need to place your dungeons and configurations inside `src/main/resources/`. If you want your resources to be accessible via Gradle and your JUnit tests then you will need to put them in `src/test/resources`.
 
-It is intentionally incomplete and is intended to give you an idea of the functionality more so than a reference for your development.
+The `FileLoader` class we have provided you with will load the resources from the correct directory automatically.
 
-| :warning:  As with any software, bugs could and will exist in the sample implementation. As outlined in the section above, many behaviours are left undefined by the specification and in these places the sample implementation will have made an assumption. There are also places where the sample implementation may contradict the specification - so if in doubt always ask on the forum.  Also a lot of UX improvements such as animations were left out in our implementation just due to the fact that it's very much a 'baseline'. |
-| --- |
+The frontend is simply some compiled JavaScript served as a static resource out of the main/resources/app folder. To recompile the frontend:
 
-### 7.2 Credits
-Most assets were taken from public domain sources, but a few require explicit referencing/credits.  You can find the credits [here](credits.md).
+`cd client # Go into the client directory
+npm install # Install required libraries
+npm run build # Compile the frontend code`
+
+You will see a folder called `dist` (short for distribution, since this is what you’d use to deploy on a service like AWS) has now appeared inside `client` which has the exact same structure as `resources/app`:
+
+Copy and paste the contents of `dist` into `resources/app`, overwriting everything that was there before.
+
+When you next `Run` the frontend locally it should include your changes.
