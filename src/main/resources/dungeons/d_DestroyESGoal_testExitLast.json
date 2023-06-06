@@ -1,0 +1,87 @@
+{
+    "entities": [
+        {
+            "type" : "player",
+            "x" : 2,
+            "y" : 2
+        }, {
+            "type" : "exit",
+            "x" : 1,
+            "y" : 2
+        }, {
+            "type" : "zombie_toast",
+            "x" : 3,
+            "y" : 2
+        }, {
+            "type" : "sword",
+            "x" : 4,
+            "y" : 2
+        }, {
+            "type" : "zombie_toast_spawner",
+            "x" : 5,
+            "y" : 2
+        }, {
+            "type" : "wall",
+            "x" : 1,
+            "y" : 1
+        }, {
+            "type" : "wall",
+            "x" : 2,
+            "y" : 1
+        }, {
+            "type" : "wall",
+            "x" : 3,
+            "y" : 1
+        }, {
+            "type" : "wall",
+            "x" : 4,
+            "y" : 1
+        }, {
+            "type" : "wall",
+            "x" : 5,
+            "y" : 1
+        }, {
+            "type" : "wall",
+            "x" : 6,
+            "y" : 1
+        }, {
+            "type" : "wall",
+            "x" : 6,
+            "y" : 2
+        }, {
+            "type" : "wall",
+            "x" : 1,
+            "y" : 3
+        }, {
+            "type" : "wall",
+            "x" : 2,
+            "y" : 3
+        }, {
+            "type" : "wall",
+            "x" : 3,
+            "y" : 3
+        }, {
+            "type" : "wall",
+            "x" : 4,
+            "y" : 3
+        }, {
+            "type" : "wall",
+            "x" : 5,
+            "y" : 3
+        }, {
+            "type" : "wall",
+            "x" : 6,
+            "y" : 3
+        }
+    ],
+    "goal-condition": {
+        "goal": "AND",
+        "subgoals": [
+            {
+                "goal": "enemies"
+            },
+            {
+                "goal": "exit"
+            }]
+    }
+}

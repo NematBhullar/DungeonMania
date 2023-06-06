@@ -1,0 +1,10 @@
+package dungeonmania.entities;
+
+import dungeonmania.Game;
+import dungeonmania.entities.overlappableEntities.Player;
+
+
+public interface Interactable {
+    public void interact(Player player, Game game);
+    public boolean isInteractable(Player player);
+}

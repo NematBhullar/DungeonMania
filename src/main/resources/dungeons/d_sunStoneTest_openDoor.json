@@ -1,0 +1,23 @@
+{
+    "entities": [
+      {
+        "type" : "player",
+        "x" : 2,
+        "y" : 2
+      }, {
+        "type" : "sun_stone",
+        "x" : 3,
+        "y" : 2
+      }, {
+        "type" : "door",
+        "x" : 4,
+        "y" : 2,
+        "key": 1
+      }, {
+        "type": "exit",
+        "x": 5,
+        "y": 5
+      }
+    ],
+    "goal-condition": {"goal": "exit"}
+}
