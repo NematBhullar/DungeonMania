@@ -5,7 +5,10 @@ https://unswcse.atlassian.net/wiki/spaces/cs2511/pages/39485441/Assignment+II+Du
 1. Introduction
 2. Product Specification
 3. Technical Specification
-4. Other Information
+4. Configuration Files
+5. Interface
+6. Program Structure
+7. Other Information
 
 ## 1. Introduction
 For many years, Penguin Pty Ltd (a small software business run by Atilla Brungs) has dominated the native application gaming market with hit games. However in recent years, advancements in web technologies mean that the new generation of consumers don't want to download and run a native application, but instead want to play games online. To adapt to the ever-changing market, Penguin Pty Ltd has decided to take users back to the 1980s and develop a new game called *Dungeon Mania*, but with a modern twist - designed as a web application.
@@ -32,12 +35,11 @@ enemies that need to be fought with weapons, or collectables like potions and tr
 
 <img src='images/advanced.png' />
 
-## 3. Technical Specification
-### 3.1 Player
+### 2.1 Player
 
 The Player, can be moved up, down, left and right into cardinally adjacent squares, provided another entity doesn't stop them (e.g. a wall). The Player begins the game with a set amount of health and attack damage. The Player spawns at a set 'entry location' at the beginning of a game.
 
-### 3.2 Static Entities
+### 2.2 Static Entities
 
 The game contains the following static entities. 
 
@@ -51,7 +53,7 @@ The game contains the following static entities.
 | Portal       | <img src="images/portal.png" /> | Teleports entities to a corresponding portal. The player must end up in a square cardinally adjacent to the corresponding portal. The square they teleport onto must also be within movement constraints - e.g. the player cannot teleport and end up on a wall. If all squares cardinally adjacent to the corresponding portal are walls, then the player should remain where they are. |
 | Zombie Toast Spawner | <img src="images/toaster.png" /> | Spawns zombie toasts in an open square cardinally adjacent to the spawner. The Player can destroy a zombie spawner if they have a weapon and are cardinally adjacent to the spawner. If all the cardinally adjacent cells to the spawner are walls, then the spawner will not spawn any zombies. |
 
-### 3.3 Moving Entities
+### 2.3 Moving Entities
 
 In addition to the Player, the game contains the following moving entities. 
 
@@ -63,7 +65,7 @@ Spider | <img src="images/spider.png" width="40" /> | Spiders spawn at random lo
 | Zombie Toast  | <img src="images/zombie.png" /> | Zombies spawn at zombie spawners and move in random directions. Zombies are limited by the same movement constraints as the Player, except portals have no effect on them. |
 | Mercenary | <img src="images/ranger.png" /> | Mercenaries do not spawn; they are only present if created as part of the dungeon. They constantly move towards the Player, stopping only if they cannot move any closer (they are able to move around walls). Mercenaries are limited by the same movement constraints as the Player. All mercenaries are considered hostile, unless the Player can bribe them with a certain amount of gold; in which case they become allies. Mercenaries must be within a certain radius of the player in order to be bribed, which is formed by the diagonally and cardinally adjacent cells in a "square" fashion, akin to the blast radius for bombs. As an ally, once it reaches the Player it simply follows the Player around, occupying the square the player was previously in. |
 
-### 3.3.1 Bosses 💀
+### 2.3.1 Bosses 💀
 
 Bosses are moving entities which are harder to defeat/conquer than normal enemies.
 
@@ -72,7 +74,7 @@ Bosses are moving entities which are harder to defeat/conquer than normal enemie
 | Assassin | <img src='images/assassin.png' /> | Assassins are exceptionally powerful mercenaries which deal significantly more damage. When bribing an Assassin, there is a certain chance that the bribe will fail; the gold will be wasted and the Assassin will remain hostile. Assassins are also capable of seeing and moving towards the Player when they are invisible, if they are within a certain radius.  |
 | Hydra | <img src='images/hydra.png' width="40" height="40" /> | Hydras are generally considered to be a special creatures similar to Zombies. Hydras are limited by the same movement constraints as Zombies. When a hydra is attacked by the player, there is a certain chance that its health will increase rather than decrease by the given amount, [as two heads have grown back when one is cut off](https://simple.wikipedia.org/wiki/Lernaean_Hydra). |
 
-### 3.4 Collectable Entities
+### 2.4 Collectable Entities
 
 | Entity    | Image | Description |
 | --------- | ----- | ----------- |
@@ -87,7 +89,7 @@ Bosses are moving entities which are harder to defeat/conquer than normal enemie
 
 It is possible for a player to use another potion while the effects of an existing potion are still lasting (can be of the same or a different type of potion). In this case, the effects are not registered immediately but are instead 'queued' and will take place the tick following the previous potion wearing of. For example, on tick 0 the Player consumes an invinsibility potion that lasts for 5 ticks and becomes invisible to enemies moving that tick, on tick 3 they use an invincibility potion, at the end of tick 4 (after all enemy movements) the player becomes visible again and becomes invincible.
 
-### 3.4.1 Further Collectable Entities 💀
+### 2.4.1 Further Collectable Entities 💀
 
 In Milestone 3, the following collectable entities have been added:
 
@@ -95,7 +97,7 @@ In Milestone 3, the following collectable entities have been added:
 | --------- | --------------| ------------|
 | Sun Stone | <img src='images/sun_stone.png' /> | A special form of treasure, hard and treasuable. It can be picked up by the player. Can be used to open doors, and can be used interchangeably with treasure or keys when building entities. But it cannot be used to bribe mercenaries or assassins. Since it is classed as treasure it counts towards the treasure goal. When used for opening doors, or when replacing another material such as a key or treasure in building entities, it is retained after use. |
 
-### 3.5 Buildable Entities
+### 2.5 Buildable Entities
 
 Some entities can be built using a 'recipe' by the player, where entities are combined to form more complex and useful entities. Once a buildable item has been constructed, it is stored in a player's inventory. For all buildable entities, once the item is constructed the materials used in that construction have been consumed and disappear from the player's inventory. 
 
@@ -104,7 +106,7 @@ Some entities can be built using a 'recipe' by the player, where entities are co
 | Bow  | <img src="images/bow.png" width="40" />| Can be crafted with 1 wood + 3 arrows. The bow has a durability which deteriorates after a certain number of battles. Bows give the Player double damage in each round, to simulate being able to attack an enemy at range (it can't actually attack an enemy at range). |
 | Shield    | <img src="images/shield.png" /> | Can be crafted with 2 wood + (1 treasure OR 1 key). Shields decrease the effect of enemy attacks. Each shield has a specific durability that dictates the number of battles it can be used before it deteriorates. |
 
-### 3.5.1 Further Buildable Entities 💀
+### 2.5.1 Further Buildable Entities 💀
 
 In Milestone 3, the following buildable entities have been added:
 
@@ -113,7 +115,7 @@ In Milestone 3, the following buildable entities have been added:
 | Sceptre   | <img src='images/sceptre.png' /> | Can be crafted with (1 wood OR 2 arrows) + (1 key OR 1 treasure) + (1 sun stone). A character with a sceptre does not need to bribe mercenaries or assassins to become allies, as they can use the sceptre to control their minds without any distance constraint. But the effects only last for a certain number of ticks. |
 | Midnight Armour | <img src='images/midnight_armour.png' /> | Can be crafted with (1 sword + 1 sun stone) if there are no zombies currently in the dungeon. Midnight armour provides extra attack damage as well as protection, and it lasts forever. |
 
-### 3.6 Battles
+### 2.6 Battles
 
 A battle takes place when the Player and an enemy are in the same cell at any point within a single tick. The conditions for a battle occurring are the same regardless of whether the player moves onto the same tile as the enemy, or vice versa.
 
@@ -128,7 +130,7 @@ If the Player's health is <= 0, then the Player dies, is removed from the game a
 
 In battles, allies provide an attack and defence bonus to the player.
 
-### 3.6.1 Weapons in Battle
+### 2.6.1 Weapons in Battle
 
 An example of a bow, sword and shield being used in battle is as follows:
 
@@ -151,7 +153,7 @@ Battle occurs:
 
 All additive/reductive bonuses from weapons are processed before multiplicative bonuses.
 
-### 3.7 Goals
+### 2.7 Goals
 
 In addition to its layout, each dungeon also has a goal that defines what must be achieved by the player for the dungeon to be considered complete. Basic goals are:
 
@@ -162,7 +164,7 @@ In addition to its layout, each dungeon also has a goal that defines what must b
 
 Goals are only evaluated after the first tick. If getting to an exit is one of a conjunction of conditions, it must be done last. For example, if the condition is to destroy all enemies AND get to an exit, the player must destroy the enemies THEN get to the exit. 
 
-#### 3.7.2 Complex Goals
+#### 2.7.2 Complex Goals
 
 More complex goals can be built by logically composing goals. For example:
 
@@ -174,11 +176,11 @@ All compound goals are binary (they contain two and only two subgoals).
 
 If getting to an exit is one of a conjunction of conditions, it must be done last. For example, if the condition is to collect 3 treasure AND get to an exit, the player must collect at least 3 treasures THEN get to the exit. It is possible for a subgoal to become un-achieved, for example if the dungeon goal is `boulders AND exit` and all boulders are pushed onto switches, then the boulders subgoal becomes complete. However, if a boulder is then moved off a switch, the boulders subgoal is no longer complete.
 
-### 3.8 Winning & Losing
+### 2.8 Winning & Losing
 
 The game is won when all the goals are achieved. The game is lost when the player dies and is removed from the map.
 
-### 3.9 Advanced Movement 💀
+### 2.9 Advanced Movement 💀
 
 During the development process the engineering team discovered issues in the requirements of the movement of mercenaries and decided that they should follow a specific path to move towards the player.
 
@@ -225,15 +227,15 @@ As part of this, you will need to extend your solution to accomodate the idea of
 
 Your implementation of Djikstra's will need to accomodate for the fact that swamp tiles slow the enemies down. There will be one autotest that checks that portals have an effect on your implementation of Djikstra's.
 
-### 3.10 Persistence 💀
+### 2.10 Persistence 💀
 
 At any point during the game, the game should be able to be saved into a local persistence layer such that if the application is terminated, the user can reboot the application, select the game from a list of saved games and continue playing from where they left off, as if nothing had changed at all.
 
 To pass the more basic tests, you will simply need to preserve the position of entities on the map. To pass more complex ones, you will need to consider persistence of items like potions, bribing/mind-control, etc.
 
-### 3.11 Extension 1: Time Travel 💀
+### 2.11 Extension 1: Time Travel 💀
 
-#### 3.11.1 Time Turner
+#### 2.11.1 Time Turner
 
 This part of the extension includes the following new entity:
 
@@ -243,7 +245,7 @@ This part of the extension includes the following new entity:
 
 If the player has collected a time turner, then two rewind buttons will appear on the frontend. When clicked, these buttons move the state of the game back one tick and 5 ticks respectively and "transport" the current player back to those game states in a time travelling fashion.
 
-#### 3.11.2 Time Travelling Portal
+#### 2.11.2 Time Travelling Portal
 
 This part of the extension includes the following new entity:
 
@@ -253,7 +255,7 @@ This part of the extension includes the following new entity:
 
 If a player travels through a time travelling portal, they end up on the same square as the portal, except the dungeon state is that of 30 ticks previously. If less than 30 ticks have passed, then the dungeon state is simply the initial dungeon state.
 
-#### 3.11.3 Time Travel Rules
+#### 2.11.3 Time Travel Rules
 
 When a character has time travelled, either by the rewind buttons or via a time travelling portal:
 
@@ -276,13 +278,13 @@ This also means that when the older player reaches the tick during which they ti
 
 </details>
 
-### 3.12 Extension 2: Dungeon Builder 💀
+### 2.12 Extension 2: Dungeon Builder 💀
 
 In this extension, instead of specifying an existing dungeon to play, players can choose specify a dungeon to be automatically generated when creating a new game.
 
 As part of this, you will need to be able to automatically generate dungeons.  Furthermore it's important that you have an *exit* at the end position and that you have exit goals setup for this created dungeon.
 
-#### 3.12.1 Generating a Dungeon - Randomized Prim's Algorithm
+#### 2.12.1 Generating a Dungeon - Randomized Prim's Algorithm
 
 <details>
 <summary>
@@ -341,7 +343,7 @@ Or, in a more wordy fashion;
     - Otherwise, mark one of it's cardinal neighbours as a empty cell as well.
 </details>
 
-### 3.13 Extension 3: Logic Switches 💀
+### 2.13 Extension 3: Logic Switches 💀
 
 There are two new entities in this extension:
 
@@ -371,11 +373,7 @@ If a switch cardinally adjacent to a wire is activated, all the other interactab
 </tr>
 </table>
 
-# Part III) Technical Specification
-
-[You can find setting up instructions here](SETUP.md).
-
-## 4. Dungeon Maps
+## 3. Technical Specification
 
 Dungeon maps consist of JSON files which contain the following:
 * `entities`, an array of entities in the map when the game starts; and
@@ -385,7 +383,7 @@ There will be no other fields present in the JSON.
 
 All maps are infinite in all directions. Moving left/right is a decrease/increase in the x co-ordinate of an entity respectively, moving up/down is a decrease/increase in the y co-ordinate of an entity respectively.
 
-### 4.1 Input Specification - Entities
+### 3.1 Input Specification - Entities
 
 Each entry in the `entities` JSON Array will be a JSON Object with the following fields:
 * `x` - the x-position of the entity in the dungeon when the game starts;
@@ -418,7 +416,7 @@ The `type` field will be a string that starts with one of the following prefixes
 | Bow  | <code>bow</code> | No, since this entity must be built by the player. |
 | Shield    | <code>shield</code> | No, since this entity must be built by the player. |
 
-#### 4.1.1 Further Entities 💀
+#### 3.1.1 Further Entities 💀
 
 | Entity | JSON Prefix | Creatable in Dungeon Map? |
 | ------ | ----------- | ------------------------- |
@@ -436,19 +434,19 @@ The `type` field will be a string that starts with one of the following prefixes
 | Switch Door    | <code>switch_door</code> | Yes |
 | Older Player    | <code>older_player</code> | No, since these will only appear when the player has time travelled. |
 
-#### 4.1.2 Extra Fields
+#### 3.1.2 Extra Fields
 
 Some entities will contain additional fields in their JSON entry, namely:
 - All entities of type `portal` will have a field `colour`. Two portals which have the same `colour` are linked (travelling through one portal takes you to the other). We will never provide a dungeon which has more than two portals of the same colour, and all portals will have a counterpart of the same colour in the dungeon. 
 - All entities of type `door` and `key` will have a `key` field which, in the case of the `key` is the identifier of the key, and in the case of the `door` the id of the key which fits that door. 
 
-#### 4.1.3 Further Extra Fields 💀
+#### 3.1.3 Further Extra Fields 💀
 
 - All logical entities will be created with the field `logic` which will be one of `and`, `or`, `xor`, or `co_and`. Milestone 2 entities (bombs, switches) that do not have a logic field cannot be activated by wires and act as they did in Milestone 2. Milestone 3 logical entities (light bulbs, switch doors) will always be created with a logic field. Regular doors will never be created with a logic field.
 - All swamp tiles will be created with a field `movement_factor` which will be the tile's movement factor, an integer >= 0.
 - Switch doors will also have keys.
 
-### 4.2 Input - Goals
+### 3.2 Input - Goals
 
 A basic goal is represented in the dungeon as:
 
@@ -474,7 +472,7 @@ A complex goal is represented in the dungeon as:
 
 Where `<goal>` is one of `"enemies"`, `"boulders"`, `"treasure"`, `"exit"`, or another nested goal conjunction/disjunction itself, and `<supergoal>` is one of `"AND"` or `"OR"`.
 
-## 5. Configuration Files
+## 4. Configuration Files
 
 In `config_template.json` we have specified the template for a configuration file. This file is important as it specifies internal game mechanics which will affect the external behaviour of your application. Rather than hard coding these constants into your classes, you must instead read in these values from the specified file when the game is created. 
 
@@ -507,7 +505,7 @@ During automarking, we will be providing our own configuration files with each t
 | `zombie_health`                 | Health of the zombie toast.                                                                                                                  |
 | `zombie_spawn_rate`             | Zombies spawn every x ticks from each spawner, starting from the x'th tick. Spawn rate of 0 means that zombies will never spawn in the game. |
 
-#### 5.1.1 Further Configuration Values 💀
+#### 4.1.1 Further Configuration Values 💀
 
 In Milestone 3, the following configuration fields have been added.
 
@@ -526,17 +524,17 @@ In Milestone 3, the following configuration fields have been added.
 | `midnight_armour_attack`       | Attack bonus wearing midnight armour gives to the player. |
 | `midnight_armour_defence`      | Defence bonus wearing midnight armour gives to the player. |
 
-#### 5.1.2 Backwards Compatiblity
+#### 4.1.2 Backwards Compatiblity
 
 All of the Milestone 2 configuration files (in the provided config files, and in our autotests) do not currently contain the fields listed in Section 4.1.2. Rather than retroactively adding these fields to the existing configuraiton files, you will need to design your implementation to accomodate for this and maintain **backwards compatibility**. All Milestone 3 configuration files will contain all values from both Milestones.
 
-## 6. Interface
+## 5. Interface
 
 The layer of abstraction is at the level of the controller. In the starter code, we have provided a class `DungeonManiaController`.
 
 The controller methods interact with a HTTP layer in the form of a web server, which we have written for you.
 
-### 6.1 Interface Data Types
+### 5.1 Interface Data Types
 
 We have provided the following interface data types for you inside `response/models`. Similarly as for the assignment, you will need to create objects of these types for the controller to return and communicate information to the server layer.
 
@@ -682,7 +680,7 @@ Direction of movement for the player.
 
 > Note: [there is also an `AnimationQueue` object and constructor that you can find here](FRONTEND.md#animationqueue) but this isn't likely to be until the latter parts of Milestone 2 (and Milestone 3).
 
-### 6.2 Interface Methods (Milestone 2)
+### 5.2 Interface Methods (Milestone 2)
 
 <table>
 <tr>
@@ -816,9 +814,9 @@ InvalidActionException
 </tr>
 </table>
 
-### 6.3 Interface Methods (Milestone 3) 💀
+### 5.3 Interface Methods (Milestone 3) 💀
 
-#### 6.3.1 Persistence
+#### 5.3.1 Persistence
 
 <table>
 <tr>
@@ -877,7 +875,7 @@ N/A
 </tr>
 </table>
 
-#### 6.3.2 Extension 1: Time Travel
+#### 5.3.2 Extension 1: Time Travel
 
 <table>
 <tr>
@@ -906,7 +904,7 @@ Rewinds the game state a specified number of ticks.
 </tr>
 </table>
 
-#### 6.3.3 Extension 2: Dungeon Generation
+#### 5.3.3 Extension 2: Dungeon Generation
 
 
 <table>
@@ -934,7 +932,7 @@ IllegalArgumentException:
 </tr>
 </table>
 
-#### 6.4 Server Layer
+#### 5.4 Server Layer
 
 If you are completing Extension Tasks 1 + 2, you will need to add code to `App.java` which sets up a HTTP endpoint that receives a web request from the frontend to call this API method. The request will be of the following format:
 
@@ -979,7 +977,7 @@ If you are completing Extension Tasks 1 + 2, you will need to add code to `App.j
 
 We have handled potential concurrency issues by synchronising all endpoints - you will simply need to need to wrap your function call in the endpoint you create using `callUsingSessionAndArgument`. The existing endpoints are a good place to start when writing this code.
 
-#### 6.5 Interface Exceptions
+#### 5.5 Interface Exceptions
 
 The only two exceptions throwable by the Controller are:
 * `IllegalArgumentException` (an builtin unchecked exception) on the specified conditions; and
@@ -987,11 +985,7 @@ The only two exceptions throwable by the Controller are:
 
 You can throw them in any order you like, we will not test any input that would fit multiple exceptions at the same time.
 
-## 7. Frontend and Customisations
-
-[You can find more information here](FRONTEND.md).
-
-## 8. Program Structure
+## 6. Program Structure
 
 
 <table>
@@ -1110,8 +1104,8 @@ A checked exception to throw when an invalid action is attempted (See Section 6.
 </tr>
 </table>
 
-## Other Information
-### 4. Sample Implementation
+## 7. Other Information
+### 7.1 Sample Implementation
 [A possible sample implementation](http://cs251122t2projectsample-env.eba-42umxris.us-east-2.elasticbeanstalk.com/app/) has been released.
 
 It is intentionally incomplete and is intended to give you an idea of the functionality more so than a reference for your development.
@@ -1119,5 +1113,5 @@ It is intentionally incomplete and is intended to give you an idea of the functi
 | :warning:  As with any software, bugs could and will exist in the sample implementation. As outlined in the section above, many behaviours are left undefined by the specification and in these places the sample implementation will have made an assumption. There are also places where the sample implementation may contradict the specification - so if in doubt always ask on the forum.  Also a lot of UX improvements such as animations were left out in our implementation just due to the fact that it's very much a 'baseline'. |
 | --- |
 
-### 5. Credits
+### 7.2 Credits
 Most assets were taken from public domain sources, but a few require explicit referencing/credits.  You can find the credits [here](credits.md).
