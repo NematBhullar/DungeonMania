@@ -1040,7 +1040,7 @@ Runs a server for Dungeon Mania.
 
 </td>
 <td>
-See Section 6.1.
+See Section 5.1.
 </td>
 <td>
 <b>No - do not modify these as we will rely on them being the same in automarking.</b>
@@ -1059,7 +1059,7 @@ See Section 6.1.
 </td>
 <td>
 
-See Section 6.1.
+See Section 5.1.
 
 </td>
 <td>
@@ -1096,7 +1096,7 @@ Contains a small custom built wrapper around Spark-Java for running a web server
 
 </td>
 <td>
-A checked exception to throw when an invalid action is attempted (See Section 6.3).
+A checked exception to throw when an invalid action is attempted (See Section 5.3).
 </td>
 <td>
 <b>No - do not modify this class as we will be relying on it during automarking.</b>
